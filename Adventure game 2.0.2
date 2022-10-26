@@ -1,0 +1,134 @@
+from multiprocessing.connection import wait
+from multiprocessing.util import is_abstract_socket_namespace
+from operator import index
+from threading import local
+from time import sleep
+
+
+game_name = "TBD"
+directions = ("north","south","east","west")
+actions = ["go","open", "close"]
+locations = ["house","town"]
+
+openable = ["mailbox", "door"]
+towns = ["Stafford", "Wilson"]
+yes = "yes"
+no = "no"
+time = 12
+is_alive = True
+hs1rooms_1stflr = ["entryway", "kitchen", "library","dining room","staircase"]
+hs1rooms_2ndflr = ["master bedroom","cild room","bathroom"]
+locals = ["start",str(towns[0]),str(towns[1])]
+Player_Location = locals[0]
+
+    #I don't know the name of the game yet
+print("Welcome to " + game_name + " you are about to embark on an amazing adventure of epic proportions.")
+print("But first, we need to know your name.")
+character_name = (input("Enter your characther's name: "))
+print("")
+print("Hello, " + character_name + " are you ready to start your adventure?")
+reply = input(": ")
+
+while reply.lower() != yes:
+    reply = input("Are you ready now: ")
+
+
+
+print("Welome!")
+print("The year is 1875. It is " + str(time) + " O'Clock in the afternoon. ")
+#while is_alive:
+
+while Player_Location == locals[0]:
+    print("You are standing on a road that runs Noth to South. Ahead of you is a blue house. In front of you is the mailbox.")
+    Fork1 = input("What would you like to do: ")
+
+    if actions[0] in Fork1.lower() and locations[0] in Fork1.lower():
+        locals.append("porch")
+        print("You have discovered a new locaiton named - " + str(locals[3]))
+        Player_Location = str(locals[3])
+
+    elif actions[0] in Fork1.lower() and directions[0] in Fork1.lower():
+        Player_Location = str(locals[1])
+
+    elif actions[0] in Fork1.lower() and directions[1] in Fork1.lower():
+        Player_Location = str(locals[2])
+
+    
+
+#want to have a condition for if a player just puts "go" WIth no location.
+#if Fork1.lower() == actions[0]:
+    #go_where = input("Where would you like to go: ")
+
+while Player_Location == locals[1]:
+    print("You approach the entrence to the town of " + str(towns[0]) + ",")
+    Branch2_a = input("What would you like to do? Enter or Go Back? : ").lower()
+
+#enter the town
+    if "enter" in Branch2_a:
+        print("You enter the town of "+str(towns[0])+", and looking down the street you can see... ")
+        sleep(3)
+        print("A bank")
+        sleep(2)
+        print("A Saloon")
+        sleep(2)
+        print("A Market")
+        sleep(2)
+        print("And a barber")
+        sleep(3)
+        Branch2_b = input("Where would you like to go?: ")
+
+        if Branch2_b.lower() == "go back":
+            Player_Location = locals[0]
+
+while Player_Location == "porch":
+    sleep(3)
+    print("You approach the door to the house.")
+    Branch1_a = input("What would you like to do: ")
+
+#enter the foyer of the house
+    if actions[1] in Branch1_a and openable[1] in Branch1_a:
+        locals.append("entryway")
+        Player_Location = locals[4]
+        print("You are now in the " + str(hs1rooms_1stflr[0]) + ". Ahead of you is a staircase. To your right is a dining room. To your left is a library.")
+        sleep(2)
+        Branch1_b = input("What would you like to do? :")
+
+#staircase upstairs
+        if actions[0] in Branch1_b and hs1rooms_1stflr[4] in Branch1_b:
+            print("You walk up the stairs. They creek with every step. You find yourself in a long hallway. On this floor there is a " + str(hs1rooms_2ndflr[0]) + " a " + str(hs1rooms_2ndflr[1]) + "and a " + str(hs1rooms_2ndflr[2]))
+            sleep(2)
+            Branch1_c = input("What would you like to do next: ")
+
+#dining room
+        elif actions[0] in Branch1_b and hs1rooms_1stflr[3] in Branch1_b:
+            print("You are now standing in the " + str(hs1rooms_1stflr[3]))
+            print("you see a long table capable of seating 22 people...")
+            sleep(3)
+            print("but there is a thick layer of dust across the table as if it has not been used in decades")
+            sleep(1)
+            print("In the corner is a china cabinet, and across the room is a doorway to the kitchen")
+            Branch1_d = input("What would you like to do next: ")
+
+#library
+        elif actions[0] in Branch1_b and hs1rooms_1stflr[2] in Branch1_b:
+            print("You have entered the library. The walls are covered in books, some seem older than anything you have ever see. In the middle of the room is a table covered in maps and open books.")
+            sleep(2)
+            Branch1_e = input("What would you like to do next: ")
+
+#kitchen
+            if actions[0] in Branch1_b and hs1rooms_1stflr[1] in Branch1_b:
+                print("You enter the kitchen. There is a table, a sink, cabenits and drawers")
+                sleep(2)
+                Branch1_f = input("What would you like to do next: ")
+
+
+#wrong choice
+        else:
+            print("you have entered an invalid action or item. Try again")
+
+    else:
+            print("you have entered an invalid action or item. Try again")
+
+
+
+
